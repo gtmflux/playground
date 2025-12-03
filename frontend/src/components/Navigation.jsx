@@ -16,9 +16,8 @@ const Navigation = () => {
   }, []);
 
   const navLinks = [
-    { name: 'Case Studies', href: '#case-studies' },
-    { name: 'Workflows', href: '#workflows' },
     { name: 'Skills', href: '#skills' },
+    { name: 'Workflows', href: '#workflows' },
     { name: 'Contact', href: '#contact' }
   ];
 
