@@ -2,9 +2,9 @@ import React from "react";
 import "./App.css";
 import Navigation from "./components/Navigation";
 import Hero from "./components/Hero";
-import CaseStudies from "./components/CaseStudies";
+import QuickFacts from "./components/QuickFacts";
+import CoreSkills from "./components/CoreSkills";
 import WorkflowDiagrams from "./components/WorkflowDiagrams";
-import Skills from "./components/Skills";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 
@@ -13,9 +13,9 @@ function App() {
     <div className="App bg-zinc-950">
       <Navigation />
       <Hero />
-      <CaseStudies />
+      <QuickFacts />
+      <CoreSkills />
       <WorkflowDiagrams />
-      <Skills />
       <Contact />
       <Footer />
     </div>
