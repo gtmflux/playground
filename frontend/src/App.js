@@ -15,9 +15,9 @@ function App() {
       <Navigation />
       <Hero />
       <QuickFacts />
-      <HowIWork />
       <CoreSkills />
       <WorkflowDiagrams />
+      <HowIWork />
       <Contact />
       <Footer />
     </div>
