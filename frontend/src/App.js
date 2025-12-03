@@ -5,7 +5,6 @@ import Hero from "./components/Hero";
 import QuickFacts from "./components/QuickFacts";
 import HowIWork from "./components/HowIWork";
 import CoreSkills from "./components/CoreSkills";
-import Experience from "./components/Experience";
 import WorkflowDiagrams from "./components/WorkflowDiagrams";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
@@ -18,7 +17,6 @@ function App() {
       <QuickFacts />
       <HowIWork />
       <CoreSkills />
-      <Experience />
       <WorkflowDiagrams />
       <Contact />
       <Footer />
