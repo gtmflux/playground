@@ -115,33 +115,27 @@ export const caseStudies = [
 
 export const workflowDiagrams = [
   {
-    id: 'email-deliverability',
-    title: 'Email Deliverability Infrastructure',
-    description: 'Multi-domain email infrastructure with automated DNS setup, warmup orchestration, and intelligent sending routing',
-    downloadEnabled: true
-  },
-  {
     id: 'inbound-outbound',
     title: 'Inbound-led Outbound Pipeline',
-    description: 'Visitor deanonymization → ICP scoring → enrichment → automated outbound sequences',
+    description: 'Website visitor → deanonymize → Clay enrich → ICP score → CRM sync → Smartlead sequences → Slack alerts',
     downloadEnabled: true
   },
   {
     id: 'supabase-central',
-    title: 'Supabase Central Database Architecture',
-    description: 'Bidirectional sync between Supabase and 12 GTM tools with real-time event streaming',
+    title: 'Supabase Central GTM Database',
+    description: 'Central hub connecting Clay, n8n, CRM, Meta Ads, and dashboards with bidirectional sync',
     downloadEnabled: true
   },
   {
-    id: 'n8n-hub',
-    title: 'n8n Automation Hub',
-    description: 'CRM hygiene, lead routing, enrichment, and cross-platform sync workflows',
+    id: 'email-deliverability',
+    title: 'Email Deliverability Infrastructure',
+    description: 'Domain registration → DNS config → warmup → health monitoring → controlled sending',
     downloadEnabled: true
   },
   {
     id: 'meta-attribution',
-    title: 'Meta Ads Attribution Feedback Loop',
-    description: 'Ad click → Landing → CRM → Conversion → CAPI event feedback to Meta',
+    title: 'Meta Ads → CRM Attribution Loop',
+    description: 'Lead form → webhook → enrich → score → CRM → Slack → nurture → CAPI feedback',
     downloadEnabled: true
   }
 ];
