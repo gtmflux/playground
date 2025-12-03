@@ -14,7 +14,7 @@ export const quickFacts = {
 export const workingPrinciples = [
   {
     title: 'Systems thinker',
-    description: 'data → infra → workflows → activation → dashboards'
+    description: 'data > infra > workflows > activation > dashboards'
   },
   {
     title: 'Bridge between GTM & technical teams',
@@ -30,11 +30,11 @@ export const workingPrinciples = [
   },
   {
     title: 'Tool-agnostic problem solving',
-    description: 'choose what solves the job, not what's trending'
+    description: 'choose what solves the job, not what\'s trending'
   },
   {
     title: 'Own end-to-end delivery',
-    description: 'from scoping → architecting → building → QA → reporting'
+    description: 'from scoping > architecting > building > QA > reporting'
   },
   {
     title: 'Clean, reliable data mindset',
