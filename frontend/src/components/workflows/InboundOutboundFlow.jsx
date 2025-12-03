@@ -1,92 +1,113 @@
 import React from 'react';
-import { Globe, Database, Filter, Zap, Mail, MessageSquare, Users } from 'lucide-react';
+import { Globe, Database, Filter, Zap, Mail, MessageSquare, Users, ArrowRight, ArrowDown } from 'lucide-react';
 
-const FlowNode = ({ icon: Icon, label, color = 'orange', size = 'md' }) => {
-  const sizeClasses = {
-    sm: 'w-24 h-24 text-xs',
-    md: 'w-32 h-32 text-sm',
-    lg: 'w-40 h-40 text-base'
-  };
-
+const FlowNode = ({ icon: Icon, label, subLabel, highlight = false }) => {
   return (
-    <div className="flex flex-col items-center gap-2 animate-fadeIn">
-      <div className={`${sizeClasses[size]} rounded-xl bg-gradient-to-br from-zinc-800 to-zinc-900 border-2 border-${color}-500/40 flex flex-col items-center justify-center gap-2 p-3 shadow-lg hover:border-${color}-500/70 transition-all duration-300 hover:scale-105 group relative`}>
-        <div className={`absolute inset-0 bg-${color}-500/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
-        <div className={`w-10 h-10 rounded-full bg-${color}-500/20 flex items-center justify-center relative z-10`}>
-          <Icon className={`text-${color}-400 w-5 h-5`} />
+    <div className="flex flex-col items-center gap-2">
+      <div className={`relative group ${
+        highlight 
+          ? 'w-36 h-36 bg-gradient-to-br from-orange-500/20 to-orange-600/10 border-2 border-orange-500/60' 
+          : 'w-32 h-32 bg-zinc-800/80 border-2 border-zinc-700/50'
+      } rounded-xl backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:border-orange-500/60 shadow-lg`}>
+        <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 p-3">
+          <div className={`${
+            highlight ? 'w-14 h-14 bg-orange-500/30' : 'w-12 h-12 bg-orange-500/20'
+          } rounded-full flex items-center justify-center`}>
+            <Icon className="text-orange-400 w-6 h-6" />
+          </div>
+          <span className="text-zinc-200 text-sm font-semibold text-center leading-tight">{label}</span>
+          {subLabel && <span className="text-zinc-500 text-xs text-center">{subLabel}</span>}
         </div>
-        <span className="text-zinc-300 text-center font-medium leading-tight relative z-10">{label}</span>
-      </div>
-    </div>
-  );
-};
-
-const FlowArrow = ({ label, vertical = false, bidirectional = false }) => {
-  if (vertical) {
-    return (
-      <div className="flex flex-col items-center justify-center py-2">
-        <div className="w-0.5 h-12 bg-gradient-to-b from-orange-500/60 to-orange-400/60 relative">
-          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0 border-l-4 border-l-transparent border-r-4 border-r-transparent border-t-8 border-t-orange-400/60" />
-          {bidirectional && (
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-0 h-0 border-l-4 border-l-transparent border-r-4 border-r-transparent border-b-8 border-b-orange-400/60" />
-          )}
-        </div>
-        {label && <span className="text-xs text-orange-400/70 mt-1 font-medium">{label}</span>}
-      </div>
-    );
-  }
-
-  return (
-    <div className="flex flex-col items-center justify-center px-3">
-      <div className="h-0.5 w-16 bg-gradient-to-r from-orange-500/60 to-orange-400/60 relative">
-        <div className="absolute right-0 top-1/2 -translate-y-1/2 w-0 h-0 border-t-4 border-t-transparent border-b-4 border-b-transparent border-l-8 border-l-orange-400/60" />
-        {bidirectional && (
-          <div className="absolute left-0 top-1/2 -translate-y-1/2 w-0 h-0 border-t-4 border-t-transparent border-b-4 border-b-transparent border-r-8 border-r-orange-400/60" />
+        {highlight && (
+          <div className="absolute inset-0 bg-orange-500/5 rounded-xl animate-pulse" />
         )}
       </div>
-      {label && <span className="text-xs text-orange-400/70 mt-1 font-medium whitespace-nowrap">{label}</span>}
     </div>
   );
 };
+
+const HorizontalArrow = ({ label }) => (
+  <div className="flex flex-col items-center justify-center">
+    <div className="flex items-center gap-1">
+      <div className="h-0.5 w-12 bg-gradient-to-r from-orange-500/40 to-orange-400/60" />
+      <ArrowRight className="text-orange-400/60 w-5 h-5" />
+    </div>
+    {label && (
+      <span className="text-xs text-orange-400/70 font-medium mt-1 whitespace-nowrap">{label}</span>
+    )}
+  </div>
+);
+
+const VerticalArrow = ({ label }) => (
+  <div className="flex items-center justify-center gap-2">
+    {label && (
+      <span className="text-xs text-orange-400/70 font-medium whitespace-nowrap">{label}</span>
+    )}
+    <div className="flex flex-col items-center gap-1">
+      <div className="w-0.5 h-12 bg-gradient-to-b from-orange-500/40 to-orange-400/60" />
+      <ArrowDown className="text-orange-400/60 w-5 h-5" />
+    </div>
+  </div>
+);
 
 const InboundOutboundFlow = () => {
   return (
-    <div className="w-full p-8 bg-gradient-to-br from-zinc-900/50 to-zinc-950/50 rounded-lg">
-      <div className="space-y-6">
-        {/* Row 1: Website to Clay */}
-        <div className="flex items-center justify-center flex-wrap gap-4">
-          <FlowNode icon={Globe} label="Website Visitor" />
-          <FlowArrow label="track" />
-          <FlowNode icon={Zap} label="Deanonymize" />
-          <FlowArrow label="domain" />
-          <FlowNode icon={Database} label="Clay Enrich" color="orange" size="lg" />
+    <div className="w-full p-8 bg-gradient-to-br from-zinc-900/80 to-zinc-950/80 rounded-xl border border-zinc-800/50">
+      <div className="max-w-5xl mx-auto">
+        {/* Row 1 */}
+        <div className="flex items-center justify-center gap-4 mb-6">
+          <FlowNode icon={Globe} label="Website" subLabel="Visitor" />
+          <HorizontalArrow label="track" />
+          <FlowNode icon={Zap} label="Deanonymize" subLabel="Company ID" />
+          <HorizontalArrow label="domain" />
+          <FlowNode icon={Database} label="Clay Enrich" subLabel="Data Layer" highlight={true} />
         </div>
 
-        <FlowArrow vertical label="enrich" />
-
-        {/* Row 2: Clay to Scoring */}
-        <div className="flex items-center justify-center flex-wrap gap-4">
-          <FlowNode icon={Database} label="Firmographics" />
-          <FlowArrow />
-          <FlowNode icon={Filter} label="ICP Score" color="orange" size="lg" />
-          <FlowArrow label="qualified" />
-          <FlowNode icon={Database} label="Supabase DB" />
+        {/* Vertical Arrow */}
+        <div className="flex justify-center mb-6">
+          <VerticalArrow label="enrich data" />
         </div>
 
-        <FlowArrow vertical label="sync" />
-
-        {/* Row 3: CRM to Outbound */}
-        <div className="flex items-center justify-center flex-wrap gap-4">
-          <FlowNode icon={Users} label="CRM Sync" />
-          <FlowArrow />
-          <FlowNode icon={Mail} label="Smartlead" color="orange" size="lg" />
-          <FlowArrow label="trigger" />
-          <FlowNode icon={MessageSquare} label="Slack Alert" />
+        {/* Row 2 */}
+        <div className="flex items-center justify-center gap-4 mb-6">
+          <FlowNode icon={Database} label="Firmographics" subLabel="Company Data" />
+          <HorizontalArrow />
+          <FlowNode icon={Filter} label="ICP Score" subLabel="Qualification" highlight={true} />
+          <HorizontalArrow label="qualified" />
+          <FlowNode icon={Database} label="Supabase" subLabel="Central DB" />
         </div>
 
-        {/* Process Flow Label */}
-        <div className="text-center mt-6 text-zinc-500 text-sm">
-          <span className="font-mono">Track → Deanonymize → Enrich → Score → Qualify → Sync → Sequence → Alert</span>
+        {/* Vertical Arrow */}
+        <div className="flex justify-center mb-6">
+          <VerticalArrow label="sync" />
+        </div>
+
+        {/* Row 3 */}
+        <div className="flex items-center justify-center gap-4">
+          <FlowNode icon={Users} label="CRM Sync" subLabel="HubSpot" />
+          <HorizontalArrow />
+          <FlowNode icon={Mail} label="Smartlead" subLabel="Sequences" highlight={true} />
+          <HorizontalArrow label="trigger" />
+          <FlowNode icon={MessageSquare} label="Slack Alert" subLabel="Notify Team" />
+        </div>
+
+        {/* Process Flow Summary */}
+        <div className="mt-8 pt-6 border-t border-zinc-800/50">
+          <div className="flex items-center justify-center gap-3 text-sm text-zinc-400">
+            <span className="font-mono">Track</span>
+            <ArrowRight className="w-4 h-4 text-orange-500/50" />
+            <span className="font-mono">Deanonymize</span>
+            <ArrowRight className="w-4 h-4 text-orange-500/50" />
+            <span className="font-mono">Enrich</span>
+            <ArrowRight className="w-4 h-4 text-orange-500/50" />
+            <span className="font-mono">Score</span>
+            <ArrowRight className="w-4 h-4 text-orange-500/50" />
+            <span className="font-mono">Sync</span>
+            <ArrowRight className="w-4 h-4 text-orange-500/50" />
+            <span className="font-mono">Sequence</span>
+            <ArrowRight className="w-4 h-4 text-orange-500/50" />
+            <span className="font-mono">Alert</span>
+          </div>
         </div>
       </div>
     </div>
