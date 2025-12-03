@@ -6,67 +6,17 @@ import { Card } from './ui/card';
 import { Button } from './ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from './ui/dialog';
 import { workflowDiagrams } from '../mockData';
-
-// Simple workflow diagram components (will be enhanced with React Flow later if needed)
-const WorkflowNode = ({ label, icon: Icon, color = 'orange' }) => (
-  <div className={`flex flex-col items-center gap-2 p-4 rounded-lg bg-zinc-800/50 border-2 border-${color}-500/30 min-w-[120px]`}>
-    <div className={`w-12 h-12 rounded-full bg-${color}-500/20 flex items-center justify-center`}>
-      <Icon className={`text-${color}-400 w-6 h-6`} />
-    </div>
-    <span className="text-zinc-300 text-sm font-medium text-center">{label}</span>
-  </div>
-);
-
-const WorkflowArrow = () => (
-  <div className="flex items-center justify-center px-4">
-    <div className="h-0.5 w-full bg-gradient-to-r from-orange-500/50 to-orange-400/50 relative">
-      <div className="absolute right-0 top-1/2 -translate-y-1/2 w-0 h-0 border-l-8 border-l-orange-400/50 border-t-4 border-t-transparent border-b-4 border-b-transparent" />
-    </div>
-  </div>
-);
-
-const EmailDeliverabilityDiagram = () => (
-  <div className="space-y-8 p-8">
-    <div className="flex items-center justify-between flex-wrap gap-4">
-      <WorkflowNode label="DNS Setup" icon={Database} />
-      <WorkflowArrow />
-      <WorkflowNode label="Domain Warmup" icon={Mail} />
-      <WorkflowArrow />
-      <WorkflowNode label="Health Monitor" icon={BarChart3} />
-    </div>
-    <div className="flex items-center justify-center flex-wrap gap-4">
-      <WorkflowArrow />
-      <WorkflowNode label="Smartlead" icon={Target} />
-      <WorkflowArrow />
-      <WorkflowNode label="Routing Engine" icon={GitBranch} />
-    </div>
-  </div>
-);
-
-const InboundOutboundDiagram = () => (
-  <div className="space-y-8 p-8">
-    <div className="flex items-center justify-between flex-wrap gap-4">
-      <WorkflowNode label="Website Visit" icon={Target} />
-      <WorkflowArrow />
-      <WorkflowNode label="Deanonymize" icon={Database} />
-      <WorkflowArrow />
-      <WorkflowNode label="ICP Score" icon={BarChart3} />
-    </div>
-    <div className="flex items-center justify-center flex-wrap gap-4">
-      <WorkflowArrow />
-      <WorkflowNode label="Enrich Data" icon={GitBranch} />
-      <WorkflowArrow />
-      <WorkflowNode label="Outbound Seq" icon={Mail} />
-    </div>
-  </div>
-);
+import InboundOutboundFlow from './workflows/InboundOutboundFlow';
+import SupabaseCentralFlow from './workflows/SupabaseCentralFlow';
+import EmailDeliverabilityFlow from './workflows/EmailDeliverabilityFlow';
+import MetaAdsFlow from './workflows/MetaAdsFlow';
 
 const diagramComponents = {
-  'email-deliverability': EmailDeliverabilityDiagram,
-  'inbound-outbound': InboundOutboundDiagram,
-  'supabase-central': EmailDeliverabilityDiagram, // Placeholder
-  'n8n-hub': InboundOutboundDiagram, // Placeholder
-  'meta-attribution': EmailDeliverabilityDiagram // Placeholder
+  'email-deliverability': EmailDeliverabilityFlow,
+  'inbound-outbound': InboundOutboundFlow,
+  'supabase-central': SupabaseCentralFlow,
+  'n8n-hub': InboundOutboundFlow, // Using Inbound as placeholder for n8n
+  'meta-attribution': MetaAdsFlow
 };
 
 const diagramIcons = {
