@@ -11,6 +11,93 @@ export const quickFacts = {
   ]
 };
 
+export const workingPrinciples = [
+  {
+    title: 'Systems thinker',
+    description: 'data → infra → workflows → activation → dashboards'
+  },
+  {
+    title: 'Bridge between GTM & technical teams',
+    description: 'translate strategy into working automation'
+  },
+  {
+    title: 'ICP-first builder & trainer',
+    description: 'understand the buyer deeply and enable teams'
+  },
+  {
+    title: 'Execution-focused',
+    description: 'I ship working systems, not diagrams or ideas'
+  },
+  {
+    title: 'Tool-agnostic problem solving',
+    description: 'choose what solves the job, not what's trending'
+  },
+  {
+    title: 'Own end-to-end delivery',
+    description: 'from scoping → architecting → building → QA → reporting'
+  },
+  {
+    title: 'Clean, reliable data mindset',
+    description: 'automation is only as good as the data foundation'
+  },
+  {
+    title: 'Simplify complexity',
+    description: 'communicate solutions clearly for non-technical teams'
+  },
+  {
+    title: 'Fast learner, fast shipper',
+    description: 'operate well in ambiguity and async environments'
+  }
+];
+
+export const experience = [
+  {
+    id: 'exp1',
+    role: 'GTM Systems Engineer',
+    company: '[Your Company Name]',
+    location: 'Remote',
+    duration: 'Jan 2023 - Present',
+    responsibilities: [
+      'Built inbound-led outbound pipeline using Clay for deanonymization and ICP scoring, achieving 34% conversion rate from identified visitors',
+      'Architected Supabase central GTM database connecting 12 tools (Clay, n8n, HubSpot, Meta Ads, Metabase) with 99.5% data accuracy',
+      'Implemented email deliverability infrastructure managing 50K+ daily emails across 15 domains with 98.2% inbox rate',
+      'Designed 150+ n8n automation workflows saving 200 hours/month on CRM hygiene and lead routing',
+      'Created Meta Ads attribution system with CAPI feedback loop improving ROAS by 68% and reducing CPA by 42%'
+    ],
+    tools: ['Clay', 'Supabase', 'n8n', 'HubSpot', 'Smartlead', 'Meta CAPI', 'PostgreSQL']
+  },
+  {
+    id: 'exp2',
+    role: 'Revenue Operations Specialist',
+    company: '[Previous Company]',
+    location: 'Remote',
+    duration: 'Mar 2021 - Dec 2022',
+    responsibilities: [
+      'Automated lead scoring and routing workflows reducing time-to-outreach from 3 days to 15 minutes',
+      'Built custom dashboards in Metabase and Tableau for executive revenue reporting',
+      'Integrated Salesforce with marketing automation tools using n8n and custom APIs',
+      'Managed data enrichment pipelines using SerpAPI, Firecrawl, and Apify for 50K+ accounts',
+      'Trained GTM team on Clay workflows and automation best practices'
+    ],
+    tools: ['Salesforce', 'n8n', 'Metabase', 'APIs', 'SerpAPI', 'Clay']
+  },
+  {
+    id: 'exp3',
+    role: 'Marketing Operations Analyst',
+    company: '[Earlier Company]',
+    location: 'Remote',
+    duration: 'Jun 2019 - Feb 2021',
+    responsibilities: [
+      'Configured HubSpot workflows for lead nurturing and scoring',
+      'Built SQL queries for marketing attribution and campaign performance analysis',
+      'Managed CRM data hygiene and deduplication processes',
+      'Created automated reporting dashboards tracking MQL to SQL conversion rates',
+      'Supported paid advertising campaigns with data analysis and optimization'
+    ],
+    tools: ['HubSpot', 'SQL', 'Google Analytics', 'Excel', 'Zapier']
+  }
+];
+
 export const coreSkills = [
   {
     id: 'email-infrastructure',
@@ -130,4 +217,12 @@ export const skills = {
   adsPlatforms: ['Meta Ads', 'Google Ads', 'LinkedIn Ads', 'Meta CAPI'],
   enrichment: ['Clay', 'Clearbit', 'SerpAPI', 'Firecrawl', 'Apify'],
   technical: ['JavaScript', 'Python', 'SQL', 'REST APIs', 'Webhooks']
+};
+
+export const contactInfo = {
+  email: 'vinay@example.com',
+  linkedin: 'https://www.linkedin.com/in/vinay-tambe-715368125/',
+  location: 'India (Remote)',
+  availability: 'Available for contract & full-time opportunities',
+  calendly: 'https://calendly.com/vinay-tambe' // Placeholder
 };
