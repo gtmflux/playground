@@ -1,115 +1,97 @@
 // Mock data for Vinay Tambe GTM Engineer Portfolio
 
-export const caseStudies = [
+export const quickFacts = {
+  location: 'India (remote)',
+  focus: 'GTM Engineering, RevOps, Outbound, Automation',
+  strengths: 'Systems thinking, tool integration, data-driven GTM',
+  stacks: [
+    'Clay', 'Supabase', 'n8n', 'Smartlead', 'Instantly', 
+    'HubSpot', 'Salesforce', 'Attio', 'Metabase', 'Tableau', 
+    'SerpAPI', 'Firecrawl', 'Apify', 'APIs', 'SQL'
+  ]
+};
+
+export const coreSkills = [
   {
-    id: 'cs1',
-    title: 'Email Deliverability + Outbound Engine',
-    shortDescription: 'Enterprise-grade email infrastructure with multi-domain warmup and intelligent routing',
-    description: 'Built a comprehensive email deliverability system handling 50K+ daily emails across multiple domains with automated DNS configuration, domain warmup orchestration, and smart routing based on engagement scores.',
-    videoUrl: '/videos/email-deliverability.mp4',
+    id: 'email-infrastructure',
+    title: 'Email Infrastructure & Deliverability',
+    description: 'Setup of domains, inboxes, warmup, DNS, sender reputation so outbound lands in inbox, not spam.',
+    impact: '98.2% deliverability rate across 50K+ daily emails',
+    tools: ['Smartlead', 'Instantly', 'ZapMail', 'Premium Inboxes', 'DNS Config'],
     videoPlaceholder: true,
-    metrics: {
-      deliverability: '98.2%',
-      dailyVolume: '50,000+',
-      domains: '15',
-      improvement: '+45%'
-    },
-    tools: ['Smartlead', 'Instantly', 'Cloudflare DNS', 'n8n', 'Python'],
-    systemDiagram: 'email-deliverability',
-    results: [
-      'Increased email deliverability from 53% to 98.2%',
-      'Automated DNS setup reducing configuration time by 90%',
-      'Built domain health monitoring system',
-      'Implemented automated warmup schedules'
-    ]
+    category: 'outbound'
   },
   {
-    id: 'cs2',
-    title: 'Inbound-led Outbound via Clay',
-    shortDescription: 'Intelligent lead scoring and automated outbound sequences triggered by website behavior',
-    description: 'Created a sophisticated pipeline that deanonymizes website visitors, scores them based on ICP fit, enriches with intent signals, and automatically triggers personalized outbound sequences.',
-    videoUrl: '/videos/clay-outbound.mp4',
+    id: 'meta-ads',
+    title: 'Paid Ads – Meta Campaigns',
+    description: 'Running Meta campaigns and connecting them to CRM + automation workflows.',
+    impact: '68% ROAS improvement, 42% lower CPA with closed-loop attribution',
+    tools: ['Meta Ads Manager', 'Meta CAPI', 'Google Tag Manager', 'n8n', 'HubSpot'],
     videoPlaceholder: true,
-    metrics: {
-      conversion: '34%',
-      leadsScored: '12,000+',
-      automationRate: '95%',
-      responseRate: '+127%'
-    },
-    tools: ['Clay', 'Clearbit Reveal', 'HubSpot', 'Smartlead', 'n8n'],
-    systemDiagram: 'inbound-outbound',
-    results: [
-      'Converted 34% of identified visitors to qualified leads',
-      'Automated 95% of lead scoring and routing',
-      '127% increase in cold email response rates',
-      'Reduced time-to-outreach from 3 days to 15 minutes'
-    ]
+    category: 'ads'
   },
   {
-    id: 'cs3',
-    title: 'Supabase Central GTM Database',
-    shortDescription: 'Unified source of truth for all GTM data with real-time sync across tools',
-    description: 'Architected a centralized PostgreSQL database on Supabase as the single source of truth for all GTM operations, syncing data bidirectionally across CRM, marketing automation, ads platforms, and analytics tools.',
-    videoUrl: '/videos/supabase-gtm.mp4',
+    id: 'clay-orchestration',
+    title: 'Clay.com – Data Orchestration & Inbound-led Outbound',
+    description: 'Expert use of Clay for enrichment, scoring and outbound triggers. Inbound-led outbound: deanonymized website visitors → Clay → qualification → targeted campaigns.',
+    impact: '34% conversion rate from identified visitors, 127% higher response rates',
+    tools: ['Clay', 'Clearbit Reveal', 'Enrichment APIs', 'Scoring Rules'],
     videoPlaceholder: true,
-    metrics: {
-      dataSources: '12',
-      syncFrequency: 'Real-time',
-      dataQuality: '99.5%',
-      costSavings: '$48K/year'
-    },
-    tools: ['Supabase', 'PostgreSQL', 'n8n', 'HubSpot', 'Salesforce', 'Metabase'],
-    systemDiagram: 'supabase-central',
-    results: [
-      'Eliminated data silos across 12 GTM tools',
-      'Achieved 99.5% data accuracy and consistency',
-      'Saved $48K annually on expensive middleware',
-      'Enabled real-time reporting and dashboards'
-    ]
+    category: 'automation'
   },
   {
-    id: 'cs4',
-    title: 'n8n RevOps Automation Hub',
-    shortDescription: '150+ workflows automating CRM hygiene, lead routing, and cross-platform sync',
-    description: 'Built a comprehensive automation layer using n8n to orchestrate 150+ workflows handling CRM data enrichment, lead assignment, Slack notifications, and cross-platform event syncing.',
-    videoUrl: '/videos/n8n-automations.mp4',
+    id: 'supabase-gtm',
+    title: 'Supabase – GTM Database / Source of Truth',
+    description: 'Postgres DB in Supabase for accounts, contacts, ICP and events; easily integrated into automated workflows to read/write/update data.',
+    impact: 'Eliminated data silos across 12 tools, 99.5% data accuracy',
+    tools: ['Supabase', 'PostgreSQL', 'n8n', 'SQL', 'Real-time APIs'],
     videoPlaceholder: true,
-    metrics: {
-      workflows: '150+',
-      timeSaved: '200 hrs/mo',
-      errorRate: '<0.5%',
-      processedEvents: '1M+'
-    },
-    tools: ['n8n', 'HubSpot', 'Attio', 'Slack', 'PostgreSQL', 'APIs'],
-    systemDiagram: 'n8n-hub',
-    results: [
-      'Saved 200+ hours monthly on manual data entry',
-      'Automated lead routing with <2min latency',
-      'Processed 1M+ events with 99.5% reliability',
-      'Built custom API integrations for 15+ tools'
-    ]
+    category: 'data'
   },
   {
-    id: 'cs5',
-    title: 'Meta Ads → CRM Attribution System',
-    shortDescription: 'Closed-loop attribution connecting ad spend to revenue with real-time feedback',
-    description: 'Engineered a complete attribution pipeline that tracks users from Meta ad click through conversion, pipes data back to CRM, and feeds conversion events to Meta CAPI for optimization.',
-    videoUrl: '/videos/meta-attribution.mp4',
+    id: 'n8n-automation',
+    title: 'n8n – Automation OS',
+    description: 'Bi-directional CRM enrichment, routing Meta ads to Slack and CRM, connecting Supabase as central GTM DB with real-time updates.',
+    impact: '150+ workflows, 200 hours/month saved, 99.5% reliability',
+    tools: ['n8n', 'Webhooks', 'APIs', 'Custom Integrations'],
     videoPlaceholder: true,
-    metrics: {
-      trackingAccuracy: '97%',
-      roas: '+68%',
-      cpa: '-42%',
-      conversionRate: '+31%'
-    },
-    tools: ['Meta CAPI', 'HubSpot', 'Google Tag Manager', 'n8n', 'PostgreSQL'],
-    systemDiagram: 'meta-attribution',
-    results: [
-      '68% improvement in ROAS',
-      '42% reduction in cost per acquisition',
-      '97% tracking accuracy post-iOS14',
-      'Real-time conversion feedback to Meta'
-    ]
+    category: 'automation'
+  },
+  {
+    id: 'dashboards',
+    title: 'Dashboards – Metabase & Tableau',
+    description: 'Building GTM and revenue dashboards on top of Supabase / central DB.',
+    impact: 'Real-time revenue visibility, executive-ready reporting',
+    tools: ['Metabase', 'Tableau', 'SQL', 'Data Visualization'],
+    videoPlaceholder: true,
+    category: 'analytics'
+  },
+  {
+    id: 'crm-platforms',
+    title: 'CRMs – HubSpot, Salesforce, Attio',
+    description: 'Hands-on configuration and integration with GTM workflows.',
+    impact: 'Seamless CRM integrations with automated data flow',
+    tools: ['HubSpot', 'Salesforce', 'Attio', 'Pipedrive', 'APIs'],
+    videoPlaceholder: true,
+    category: 'crm'
+  },
+  {
+    id: 'data-scraping',
+    title: 'Data Scraping & Enrichment',
+    description: 'Using SerpAPI, Firecrawl, Apify, Google, Google Maps, LinkedIn Sales Navigator, websites for account/people/qualitative data.',
+    impact: 'Enriched 50K+ accounts with custom data points',
+    tools: ['SerpAPI', 'Firecrawl', 'Apify', 'LinkedIn Sales Nav', 'Custom Scrapers'],
+    videoPlaceholder: true,
+    category: 'data'
+  },
+  {
+    id: 'coding-apis',
+    title: 'Light Coding & APIs',
+    description: 'SQL, good understanding of APIs, webhooks and data flows.',
+    impact: 'Built custom integrations and data pipelines',
+    tools: ['SQL', 'JavaScript', 'Python', 'REST APIs', 'Webhooks'],
+    videoPlaceholder: true,
+    category: 'technical'
   }
 ];
 
