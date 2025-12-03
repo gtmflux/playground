@@ -220,9 +220,9 @@ export const skills = {
 };
 
 export const contactInfo = {
-  email: 'vinay@example.com',
+  email: 'vinay@vinay-gtme.com',
   linkedin: 'https://www.linkedin.com/in/vinay-tambe-715368125/',
   location: 'India (Remote)',
   availability: 'Available for contract & full-time opportunities',
-  calendly: 'https://calendly.com/vinay-tambe' // Placeholder
+  calendly: 'https://calendar.app.google/YGAdYifQ2a1ky91z6'
 };
