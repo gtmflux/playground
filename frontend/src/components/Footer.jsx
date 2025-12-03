@@ -1,14 +1,15 @@
 import React from 'react';
 import { Linkedin, Twitter, Github, Mail } from 'lucide-react';
+import { contactInfo } from '../mockData';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   const socialLinks = [
-    { icon: Linkedin, href: 'https://linkedin.com', label: 'LinkedIn' },
+    { icon: Linkedin, href: contactInfo.linkedin, label: 'LinkedIn' },
     { icon: Twitter, href: 'https://twitter.com', label: 'Twitter' },
     { icon: Github, href: 'https://github.com', label: 'GitHub' },
-    { icon: Mail, href: 'mailto:vinay@example.com', label: 'Email' }
+    { icon: Mail, href: `mailto:${contactInfo.email}`, label: 'Email' }
   ];
 
   return (
