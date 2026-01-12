@@ -90,6 +90,7 @@ const Hero = () => {
             <Button
               size="lg"
               className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-6 text-lg font-medium rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-[0_0_30px_rgba(249,115,22,0.4)] group"
+              onClick={() => document.getElementById('workflows')?.scrollIntoView({ behavior: 'smooth' })}
             >
               <Play className="mr-2 h-5 w-5 group-hover:scale-110 transition-transform" />
               Watch My Work
@@ -98,6 +99,7 @@ const Hero = () => {
               size="lg"
               variant="outline"
               className="border-2 border-zinc-700 hover:border-orange-500 text-white px-8 py-6 text-lg font-medium rounded-lg bg-transparent hover:bg-orange-500/10 transition-all duration-300 group"
+              onClick={() => window.open('https://calendar.app.google/YGAdYifQ2a1ky91z6', '_blank')}
             >
               Book 30-min Call
               <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
