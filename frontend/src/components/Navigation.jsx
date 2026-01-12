@@ -58,6 +58,7 @@ const Navigation = () => {
             ))}
             <Button
               className="bg-orange-500 hover:bg-orange-600 text-white font-medium rounded-lg px-6 transition-all duration-300 hover:shadow-[0_0_20px_rgba(249,115,22,0.4)]"
+              onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
             >
               Let's Talk
             </Button>
@@ -95,7 +96,10 @@ const Navigation = () => {
               ))}
               <Button
                 className="w-full bg-orange-500 hover:bg-orange-600 text-white font-medium rounded-lg py-6"
-                onClick={() => setIsMobileMenuOpen(false)}
+                onClick={() => {
+                  setIsMobileMenuOpen(false);
+                  document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+                }}
               >
                 Let's Talk
               </Button>
