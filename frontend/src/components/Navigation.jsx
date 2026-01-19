@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, BarChart3 } from 'lucide-react';
 import { Button } from './ui/button';
 
 const Navigation = () => {
+  const location = useLocation();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const isDashboard = location.pathname === '/dashboard';
 
   useEffect(() => {
     const handleScroll = () => {
@@ -46,7 +49,7 @@ const Navigation = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
-            {navLinks.map((link) => (
+            {!isDashboard && navLinks.map((link) => (
               <a
                 key={link.name}
                 href={link.href}
@@ -56,12 +59,32 @@ const Navigation = () => {
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-500 transition-all duration-300 group-hover:w-full" />
               </a>
             ))}
-            <Button
-              className="bg-orange-500 hover:bg-orange-600 text-white font-medium rounded-lg px-6 transition-all duration-300 hover:shadow-[0_0_20px_rgba(249,115,22,0.4)]"
-              onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-            >
-              Let's Talk
-            </Button>
+            {!isDashboard ? (
+              <>
+                <Link
+                  to="/dashboard"
+                  className="flex items-center gap-2 text-zinc-300 hover:text-orange-500 transition-colors duration-300 font-medium relative group"
+                >
+                  <BarChart3 size={18} />
+                  Dashboard
+                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-orange-500 transition-all duration-300 group-hover:w-full" />
+                </Link>
+                <Button
+                  className="bg-orange-500 hover:bg-orange-600 text-white font-medium rounded-lg px-6 transition-all duration-300 hover:shadow-[0_0_20px_rgba(249,115,22,0.4)]"
+                  onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+                >
+                  Let's Talk
+                </Button>
+              </>
+            ) : (
+              <Link to="/">
+                <Button
+                  className="bg-orange-500 hover:bg-orange-600 text-white font-medium rounded-lg px-6 transition-all duration-300 hover:shadow-[0_0_20px_rgba(249,115,22,0.4)]"
+                >
+                  Back to Portfolio
+                </Button>
+              </Link>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
