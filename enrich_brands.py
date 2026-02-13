@@ -388,12 +388,61 @@ def enrich_row(row: dict) -> dict:
     return enriched
 
 
+def normalize_domain(value: str) -> str:
+    """Normalize a domain or URL to a bare domain for dedup matching."""
+    d = value.strip().lower()
+    d = re.sub(r'^https?://', '', d)
+    d = re.sub(r'^www\.', '', d)
+    d = d.rstrip('/')
+    return d
+
+
+# Column name mapping from brands2.csv -> brands.csv schema
+LIST2_COLUMN_MAP = {
+    'Domain Name': 'domain',
+    'domain_url': 'domain_url',
+    'merchant_name': 'merchant_name',
+    'categories': 'categories',
+    'city': 'city',
+    'company_location': 'company_location',
+    'description': 'description',
+    'linkedin_url': 'linkedin_url',
+}
+
+
+def load_secondary_csv(path: Path) -> list[dict]:
+    """Load the secondary (sparse) CSV and remap columns to the primary schema."""
+    rows = []
+    with open(path, 'r', newline='', encoding='utf-8') as f:
+        reader = csv.DictReader(f)
+        for raw in reader:
+            row = {}
+            for src_col, dst_col in LIST2_COLUMN_MAP.items():
+                val = raw.get(src_col, '').strip()
+                if val:
+                    row[dst_col] = val
+            # Ensure domain field is populated
+            if 'domain' not in row and 'domain_url' in row:
+                row['domain'] = normalize_domain(row['domain_url'])
+            elif 'domain' in row:
+                row['domain'] = normalize_domain(row['domain'])
+            row['source'] = 'list2'
+            rows.append(row)
+    return rows
+
+
 def main():
     parser = argparse.ArgumentParser(description='Enrich and qualify Store Leads brand data')
-    parser.add_argument('-i', '--input', default='brands.csv', help='Input CSV path (default: brands.csv)')
-    parser.add_argument('-o', '--output', default='brands_enriched.csv', help='Output CSV path (default: brands_enriched.csv)')
-    parser.add_argument('--min-revenue', type=float, default=5_000_000, help='Minimum yearly revenue filter in USD (default: 5000000)')
-    parser.add_argument('--max-revenue', type=float, default=50_000_000, help='Maximum yearly revenue filter in USD (default: 50000000)')
+    parser.add_argument('-i', '--input', default='brands.csv',
+                        help='Primary input CSV path (default: brands.csv)')
+    parser.add_argument('-o', '--output', default='brands_enriched.csv',
+                        help='Output CSV path (default: brands_enriched.csv)')
+    parser.add_argument('--merge', default=None,
+                        help='Secondary CSV to merge (net-new brands added, duplicates skipped)')
+    parser.add_argument('--min-revenue', type=float, default=5_000_000,
+                        help='Min yearly revenue filter for primary list (default: 5000000)')
+    parser.add_argument('--max-revenue', type=float, default=50_000_000,
+                        help='Max yearly revenue filter for primary list (default: 50000000)')
     args = parser.parse_args()
 
     input_path = Path(args.input)
@@ -403,27 +452,72 @@ def main():
         print(f'Error: {input_path} not found', file=sys.stderr)
         sys.exit(1)
 
-    print(f'Revenue filter: ${args.min_revenue:,.0f} - ${args.max_revenue:,.0f}')
+    print(f'Revenue filter (primary list): ${args.min_revenue:,.0f} - ${args.max_revenue:,.0f}')
+
+    # --- Pass 1: Process primary list (rich data, revenue-filtered) ---
+    seen_domains = set()
+    stats = {tier: 0 for tier in ['S', 'A', 'B', 'C', 'D']}
+    qual_stats = {tier: 0 for tier in ['Hot', 'Warm', 'Cool', 'Cold']}
+    total_primary_read = 0
+    total_primary_written = 0
 
     with open(input_path, 'r', newline='', encoding='utf-8') as fin:
         reader = csv.DictReader(fin)
         original_fields = reader.fieldnames or []
-        output_fields = original_fields + ENRICHED_COLUMNS
+        output_fields = original_fields + ['source'] + ENRICHED_COLUMNS
 
         with open(output_path, 'w', newline='', encoding='utf-8') as fout:
-            writer = csv.DictWriter(fout, fieldnames=output_fields)
+            writer = csv.DictWriter(fout, fieldnames=output_fields, extrasaction='ignore')
             writer.writeheader()
 
-            stats = {tier: 0 for tier in ['S', 'A', 'B', 'C', 'D']}
-            qual_stats = {tier: 0 for tier in ['Hot', 'Warm', 'Cool', 'Cold']}
-            total_read = 0
-            total_written = 0
-
             for row in reader:
-                total_read += 1
+                total_primary_read += 1
                 yearly_sales = parse_usd(row.get('estimated_yearly_sales', ''))
                 if yearly_sales < args.min_revenue or yearly_sales > args.max_revenue:
                     continue
+
+                domain_key = normalize_domain(row.get('domain', ''))
+                if domain_key in seen_domains:
+                    continue
+                seen_domains.add(domain_key)
+
+                enriched = enrich_row(row)
+                row.update(enriched)
+                row['source'] = 'list1'
+                writer.writerow(row)
+
+                stats[enriched['brand_tier']] += 1
+                qual_stats[enriched['qualification_tier']] += 1
+                total_primary_written += 1
+
+    print(f'\n--- Primary list (brands.csv) ---')
+    print(f'Read {total_primary_read}, wrote {total_primary_written} (revenue-filtered)')
+
+    # --- Pass 2: Merge secondary list (net-new only, no revenue filter) ---
+    total_secondary_new = 0
+    total_secondary_dup = 0
+
+    if args.merge:
+        merge_path = Path(args.merge)
+        if not merge_path.exists():
+            print(f'Error: {merge_path} not found', file=sys.stderr)
+            sys.exit(1)
+
+        secondary_rows = load_secondary_csv(merge_path)
+        print(f'\n--- Secondary list ({merge_path.name}) ---')
+        print(f'Loaded {len(secondary_rows)} rows')
+
+        with open(output_path, 'a', newline='', encoding='utf-8') as fout:
+            writer = csv.DictWriter(fout, fieldnames=output_fields, extrasaction='ignore')
+
+            for row in secondary_rows:
+                domain_key = normalize_domain(row.get('domain', ''))
+                if not domain_key:
+                    continue
+                if domain_key in seen_domains:
+                    total_secondary_dup += 1
+                    continue
+                seen_domains.add(domain_key)
 
                 enriched = enrich_row(row)
                 row.update(enriched)
@@ -431,9 +525,13 @@ def main():
 
                 stats[enriched['brand_tier']] += 1
                 qual_stats[enriched['qualification_tier']] += 1
-                total_written += 1
+                total_secondary_new += 1
 
-    print(f'Read {total_read} brands, wrote {total_written} -> {output_path}')
+        print(f'Duplicates skipped: {total_secondary_dup}')
+        print(f'Net-new added: {total_secondary_new}')
+
+    total_written = total_primary_written + total_secondary_new
+    print(f'\n=== TOTAL: {total_written} brands -> {output_path} ===')
     print(f'\n--- Brand Tier Distribution ---')
     for tier in ['S', 'A', 'B', 'C', 'D']:
         pct = stats[tier] * 100 / total_written if total_written else 0
